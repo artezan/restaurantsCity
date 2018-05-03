@@ -2,17 +2,29 @@
   <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>   
-    <ion-title>Restaurants</ion-title>   
+    </button>
+    <ion-title>Restaurants</ion-title>
   </ion-navbar>
-<ion-toolbar color="primary" no-border-top >
-    <button ion-button  item-end icon-left round color="danger" >
-        <ion-icon name="man"></ion-icon> Order by Name
-      </button>
-      <button ion-button  item-end icon-left round color="danger" >
-          <ion-icon name="man"></ion-icon> Order by Name
-        </button>
-  </ion-toolbar>   
+  <ion-toolbar color="primary" no-border-top>
+    <button *ngIf="isOrder === 'Asc'" (click)="orderByNameAsc()" ion-button item-end icon-left round color="danger">
+      <ion-icon name="md-arrow-down"></ion-icon> Order by Name
+    </button>
+    <button *ngIf="isOrder === 'Dsd'" (click)="orderByNameDsd()" ion-button item-end icon-left round color="danger">
+      <ion-icon name="md-arrow-up"></ion-icon> Order by Name
+    </button>
+    <button *ngIf="isOrder === 'null'" (click)="orderByNameAsc()" ion-button item-end icon-left round color="danger">
+      <ion-icon name="ios-funnel"></ion-icon> Order by Name
+    </button>
+    <button *ngIf="isRating === 'Asc'" (click)="orderByRatingAsc()" ion-button item-end icon-left round color="danger">
+      <ion-icon name="md-arrow-up"></ion-icon> Order by Rating
+    </button>
+    <button *ngIf="isRating === 'Dsd'" (click)="orderByRatingDsd()" ion-button item-end icon-left round color="danger">
+      <ion-icon name="md-arrow-down"></ion-icon> Order by Rating
+    </button>
+    <button *ngIf="isRating === 'null'" (click)="orderByRatingAsc()" ion-button item-end icon-left round color="danger">
+      <ion-icon name="ios-funnel"></ion-icon> Order by Rating
+    </button>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -24,18 +36,18 @@
         </ion-avatar>
         <h2>{{restaurant.name}}</h2>
         <p>{{restaurant.address.city}}</p>
-          <span *ngIf="restaurant.rating > 0" item-end >
-            <ion-icon color="primary" *ngFor="let starts of Arr(restaurant.rating).fill(1)"  name="star">
-            </ion-icon>
-          </span>
-       
-       
-         
-            <span *ngIf="restaurant.rating === 0"  item-end> 
-                <b ion-text text-center >No rating</b>
-                <ion-icon name="thumbs-down"></ion-icon>
-            </span>
-        
+        <span *ngIf="restaurant.rating > 0" item-end>
+          <ion-icon color="primary" *ngFor="let starts of Arr(restaurant.rating).fill(1)" name="star">
+          </ion-icon>
+        </span>
+
+
+
+        <span *ngIf="restaurant.rating === 0" item-end>
+          <b ion-text text-center>No rating</b>
+          <ion-icon name="thumbs-down"></ion-icon>
+        </span>
+
       </ion-item>
     </ion-list>
   </ion-grid>

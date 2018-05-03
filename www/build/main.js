@@ -42,6 +42,8 @@ webpackEmptyAsyncContext.id = 152;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__providers_restaurants_data_restaurants_data__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -54,29 +56,93 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl, restaurantsDataSvc) {
         this.navCtrl = navCtrl;
         this.restaurantsDataSvc = restaurantsDataSvc;
         this.Arr = Array;
+        this.isOrder = 'null';
+        this.isRating = 'null';
     }
     HomePage.prototype.ionViewDidLoad = function () {
         this.getDataRestaurants();
     };
     HomePage.prototype.getDataRestaurants = function () {
         this.restaurants$ = this.restaurantsDataSvc.getData();
+    };
+    HomePage.prototype.orderByNameAsc = function () {
+        var _this = this;
+        this.isOrder = 'Dsd';
+        this.isRating = 'null';
         this.restaurants$.subscribe(function (data) {
-            console.log(data);
+            data.forEach(function (element) {
+                element.name = element.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '');
+            });
+            var dataOrderByName = data.sort(function (a, b) {
+                return a.name > b.name ? 1 : b.name > a.name ? -1 : 0;
+            });
+            _this.restaurants$ = Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from__["from"])([dataOrderByName]);
+        });
+    };
+    HomePage.prototype.orderByNameDsd = function () {
+        var _this = this;
+        this.isOrder = 'Asc';
+        this.isRating = 'null';
+        this.restaurants$.subscribe(function (data) {
+            data.forEach(function (element) {
+                element.name = element.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '');
+            });
+            var dataOrderByName = data.sort(function (a, b) {
+                return b.name > a.name ? 1 : a.name > b.name ? -1 : 0;
+            });
+            _this.restaurants$ = Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from__["from"])([dataOrderByName]);
+        });
+    };
+    HomePage.prototype.orderByRatingAsc = function () {
+        var _this = this;
+        this.isOrder = 'null';
+        this.isRating = 'Dsd';
+        this.restaurants$.subscribe(function (data) {
+            data.forEach(function (element) {
+                element.name = element.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '');
+            });
+            var dataOrderByName = data.sort(function (a, b) {
+                return a.rating > b.rating ? 1 : b.rating > a.rating ? -1 : 0;
+            });
+            _this.restaurants$ = Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from__["from"])([dataOrderByName]);
+        });
+    };
+    HomePage.prototype.orderByRatingDsd = function () {
+        var _this = this;
+        this.isOrder = 'null';
+        this.isRating = 'Asc';
+        this.restaurants$.subscribe(function (data) {
+            data.forEach(function (element) {
+                element.name = element.name
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '');
+            });
+            var dataOrderByName = data.sort(function (a, b) {
+                return b.rating > a.rating ? 1 : a.rating > b.rating ? -1 : 0;
+            });
+            _this.restaurants$ = Object(__WEBPACK_IMPORTED_MODULE_3_rxjs_observable_from__["from"])([dataOrderByName]);
         });
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"E:\Ghost Games\documentos\prueba inter\restaurantsCity\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>   \n    <ion-title>Restaurants</ion-title>   \n  </ion-navbar>\n<ion-toolbar color="primary" no-border-top >\n    <button ion-button  item-end icon-left round color="danger" >\n        <ion-icon name="man"></ion-icon> Order by Name\n      </button>\n      <button ion-button  item-end icon-left round color="danger" >\n          <ion-icon name="man"></ion-icon> Order by Name\n        </button>\n  </ion-toolbar>   \n</ion-header>\n\n<ion-content padding>\n  <ion-grid fixed>\n    <ion-list text-wrap>\n      <ion-item *ngFor="let restaurant of restaurants$ | async">\n        <ion-avatar item-start>\n          <ion-icon name="restaurant"></ion-icon>\n        </ion-avatar>\n        <h2>{{restaurant.name}}</h2>\n        <p>{{restaurant.address.city}}</p>\n          <span *ngIf="restaurant.rating > 0" item-end >\n            <ion-icon color="primary" *ngFor="let starts of Arr(restaurant.rating).fill(1)"  name="star">\n            </ion-icon>\n          </span>\n       \n       \n         \n            <span *ngIf="restaurant.rating === 0"  item-end> \n                <b ion-text text-center >No rating</b>\n                <ion-icon name="thumbs-down"></ion-icon>\n            </span>\n        \n      </ion-item>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"E:\Ghost Games\documentos\prueba inter\restaurantsCity\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"E:\Ghost Games\documentos\prueba inter\restaurantsCity\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Restaurants</ion-title>\n  </ion-navbar>\n  <ion-toolbar color="primary" no-border-top>\n    <button *ngIf="isOrder === \'Asc\'" (click)="orderByNameAsc()" ion-button item-end icon-left round color="danger">\n      <ion-icon name="md-arrow-down"></ion-icon> Order by Name\n    </button>\n    <button *ngIf="isOrder === \'Dsd\'" (click)="orderByNameDsd()" ion-button item-end icon-left round color="danger">\n      <ion-icon name="md-arrow-up"></ion-icon> Order by Name\n    </button>\n    <button *ngIf="isOrder === \'null\'" (click)="orderByNameAsc()" ion-button item-end icon-left round color="danger">\n      <ion-icon name="ios-funnel"></ion-icon> Order by Name\n    </button>\n    <button *ngIf="isRating === \'Asc\'" (click)="orderByRatingAsc()" ion-button item-end icon-left round color="danger">\n      <ion-icon name="md-arrow-up"></ion-icon> Order by Rating\n    </button>\n    <button *ngIf="isRating === \'Dsd\'" (click)="orderByRatingDsd()" ion-button item-end icon-left round color="danger">\n      <ion-icon name="md-arrow-down"></ion-icon> Order by Rating\n    </button>\n    <button *ngIf="isRating === \'null\'" (click)="orderByRatingAsc()" ion-button item-end icon-left round color="danger">\n      <ion-icon name="ios-funnel"></ion-icon> Order by Rating\n    </button>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-grid fixed>\n    <ion-list text-wrap>\n      <ion-item *ngFor="let restaurant of restaurants$ | async">\n        <ion-avatar item-start>\n          <ion-icon name="restaurant"></ion-icon>\n        </ion-avatar>\n        <h2>{{restaurant.name}}</h2>\n        <p>{{restaurant.address.city}}</p>\n        <span *ngIf="restaurant.rating > 0" item-end>\n          <ion-icon color="primary" *ngFor="let starts of Arr(restaurant.rating).fill(1)" name="star">\n          </ion-icon>\n        </span>\n\n\n\n        <span *ngIf="restaurant.rating === 0" item-end>\n          <b ion-text text-center>No rating</b>\n          <ion-icon name="thumbs-down"></ion-icon>\n        </span>\n\n      </ion-item>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"E:\Ghost Games\documentos\prueba inter\restaurantsCity\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_0__providers_restaurants_data_restaurants_data__["a" /* RestaurantsDataProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__providers_restaurants_data_restaurants_data__["a" /* RestaurantsDataProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__providers_restaurants_data_restaurants_data__["a" /* RestaurantsDataProvider */]) === "function" && _b || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=home.js.map
