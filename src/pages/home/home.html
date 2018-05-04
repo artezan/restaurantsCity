@@ -29,6 +29,7 @@
 
 <ion-content padding>
   <h2 text-center>Select one restaurant for more details</h2>
+  <p text-center>Bonus 2 and 3 on the slide menu at the left top </p>
   <ion-grid fixed>
     <ion-list text-wrap>
       <button ion-item  *ngFor="let restaurant of restaurants$ | async" (click)="getLocation(restaurant)">

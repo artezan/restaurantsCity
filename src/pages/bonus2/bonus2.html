@@ -1,28 +1,143 @@
 <ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>Bonus 2</ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bonus 2 and Bonus 3</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding>
-<h2>Select or click a point on the map to see restaurants near</h2>
-<ion-item>
-    <ion-label  color="primary" floating>Enter radius (Km)</ion-label>
-    <ion-input type="number" [(ngModel)]="radius" ></ion-input>
-    
-  </ion-item>
-  <button  ion-button color="danger">
-      Change
-     </button>
-<ion-card>
-    <ion-navbar color="primary">
-      <ion-card-title style="color: #fff;">
+  <h2>Write or click a map point and enter radius to see restaurants near</h2>
+  <ion-grid fixed>
+    <ion-row>
+
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" floating>Enter Lat</ion-label>
+          <ion-input type="number" [(ngModel)]="lat"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" floating>Enter Lng</ion-label>
+          <ion-input type="number" [(ngModel)]="lng"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" floating>Enter radius (Km)</ion-label>
+          <ion-input type="number" [(ngModel)]="radius"></ion-input>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <button fixed ion-button color="danger" round (click)="startMap(); clickMap(lat, lng)">
+          View Restaurants
+        </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+  <!-- Start Data -->
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <ion-card color="indigo">
+          <ion-card-header>
+            <ion-icon name="globe"></ion-icon>
+            Count of all the restaurants within radius
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{numRestaurants}}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card color="indigo">
+          <ion-card-header>
+            <ion-icon name="star"></ion-icon>
+            Average Rating
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{averageRating.toFixed(3)}}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card color="indigo">
+          <ion-card-header>
+            <ion-icon name="md-analytics"></ion-icon>
+            Standard deviation of rating
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{standarDeviation}}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-card color="blue">
+        <ion-card-header>
+          <ion-icon name="happy"></ion-icon>
+          The nearest restaurants in the zone given a point in a map
+        </ion-card-header>
+        <p>Enter a Rate</p>
+        <ion-row>
+          <ion-col col-md-2>
+            <ion-item>
+              <ion-label>Max</ion-label>
+              <ion-input type="number" [(ngModel)]="inputRatingMax"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-md-2>
+            <ion-item>
+              <ion-label>Min</ion-label>
+              <ion-input type="number" [(ngModel)]="inputRatingMin"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-md-2>
+            <button fixed ion-button color="danger" round (click)="getRecomendation(inputRatingMin,inputRatingMax)">
+              Find
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-card-content *ngIf="bestRest">
+          <ion-list>
+            <h2>
+              <b>Name</b> {{bestRest.name}}
+            </h2>
+            <h2>
+              <b>Rating</b> {{bestRest.rating}}
+            </h2>
+            <h2>
+              <b>City</b> {{bestRest.address.city}}
+            </h2>
+            <h2>
+              <b>State</b> {{bestRest.address.state}}
+            </h2>
+            <h2>
+              <b>Street</b> {{bestRest.address.street}}
+            </h2>
+            <h2>
+              <b>Contact</b> {{bestRest.contact.phone}}
+            </h2>
+          </ion-list>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-card>
+      <ion-navbar color="primary">
+        <ion-card-title style="color: #fff;">
           Restaurants within radius
-      </ion-card-title>
-    </ion-navbar>
-    <div #gmap class="map-responsive"></div>
-  </ion-card>
+        </ion-card-title>
+      </ion-navbar>
+      <div #gmap class="map-responsive"></div>
+    </ion-card>
+  </ion-grid>
 </ion-content>
