@@ -7,17 +7,44 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+<ion-content padding>
+  <ion-grid fixed>
+    <ion-card>
+      <ion-navbar color="primary">
+        <ion-card-title style="color: #fff;">
+          {{restaurant.name}} 
+        </ion-card-title>
+      </ion-navbar>
+      <ion-card-content>
+        <ion-list>
+          <h3 ion-item>
+            <b>Name:</b> {{restaurant.name}}</h3>
+          <h3 ion-item>
+            <b>Site:</b> {{restaurant.contact.site}}</h3>
+          <h3 ion-item>
+            <b>Phone:</b> {{restaurant.contact.phone}}</h3>
+          <h3 ion-item>
+            <b>Email:</b> {{restaurant.contact.email}}</h3>
+          <h3 ion-item>
+            <b>City:</b> {{restaurant.address.city}}</h3>
+          <h3 ion-item>
+            <b>State:</b> {{restaurant.address.state}}</h3>
+          <h3 ion-item>
+            <b>Street:</b> {{restaurant.address.street}}</h3>
+
+        </ion-list>
+
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-navbar color="primary">
+        <ion-card-title style="color: #fff;">
+          Geographic Location
+        </ion-card-title>
+      </ion-navbar>
+      <div #gmap class="map-responsive"></div>
+    </ion-card>
+
+
+  </ion-grid>
 </ion-content>

@@ -4,6 +4,7 @@ import { RestaurantsDataProvider } from './../../providers/restaurants-data/rest
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { from } from 'rxjs/observable/from';
+import { ListPage } from '../list/list';
 
 @Component({
   selector: 'page-home',
@@ -83,5 +84,8 @@ export class HomePage {
       });
       this.restaurants$ = from([dataOrderByName]);
     });
+  }
+  getLocation(item){
+    this.navCtrl.push(ListPage,item);
   }
 }

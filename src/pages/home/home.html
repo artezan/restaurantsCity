@@ -28,9 +28,10 @@
 </ion-header>
 
 <ion-content padding>
+  <h2 text-center>Select one restaurant for more details</h2>
   <ion-grid fixed>
     <ion-list text-wrap>
-      <ion-item *ngFor="let restaurant of restaurants$ | async">
+      <button ion-item  *ngFor="let restaurant of restaurants$ | async" (click)="getLocation(restaurant)">
         <ion-avatar item-start>
           <ion-icon name="restaurant"></ion-icon>
         </ion-avatar>
@@ -48,7 +49,7 @@
           <ion-icon name="thumbs-down"></ion-icon>
         </span>
 
-      </ion-item>
+      </button>
     </ion-list>
   </ion-grid>
 </ion-content>
